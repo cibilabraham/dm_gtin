@@ -17,40 +17,49 @@
             Add new
         </button>
 
-        <a class="btn btn-primary btn-block" href="/" >Back</a>
+        <a class="btn btn-primary btn-block" href="/dashboard/" >Back</a>
     </div>
 
 
     <div class="row pt-4">
         <div class="col-md-12">
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <table id="example" class="table table-striped table-bordered border " style="width:100%">
                 <thead>
                     <tr>
                         <th>Gtin Num</th>
-                        <th>Brand Owner Name</th>
-                        <th>Data Provider Name</th>
-                        <th>Manufacturer Name</th>
-                        <th>Contact Type Code</th>
-                        <th>Contact</th>
-                        <th>Contact Address</th>
-                        <th>Contact Method Code</th>
-                        <th>Contact Details</th>
+
                         <th>Brand Name</th>
+                        <th>Brand Owner Name</th>
                         <th>Sub Brand Name</th>
+
+                        <th>Contact</th>
+                        <th>Contact Type Code</th>
+                        <th>Contact Method Code</th>
+                        <th>Contact Address</th>
+                        <th>Contact Details</th>
+
+
                         <th>Short Product Name</th>
                         <th>Product Marketing Message</th>
                         <th>Search KeyWords for Product</th>
                         <th>Product Type Description</th>
+                        <th>Data Provider Name</th>
+                        <th>Manufacturer Name</th>
+                        <th>GPC Code</th>
+                        <th>Market Availability Date</th>
+
                         <th>Length</th>
                         <th>Height</th>
                         <th>Width</th>
                         <th>Gross Weight</th>
-                        <th>Market Availability Date</th>
+                        
                         <th>Allergen Containment Code</th>
                         <th>Allergen Type Code</th>
                         <th>Allergen Statement</th>
                         <th>Ingredient Statement</th>
+                        <th>Feed Type Certification</th>
                         <th>Allergen Declarations Indicator</th>
+                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -77,138 +86,160 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
 
-                    <div class="col-md-3">
-                        <label  class="form-label">Brand Owner Name</label>
-                        <input type="hidden" id="Id" name="Id" value="" >
-                        <input type="hidden" id="userId" name="userId" value="{{ request.session.userId }}" >
-                        <input type="text" class="form-control" id="BrandOwnerName" value="" placeholder="Enter Brand Owner Name" onkeyup="removeErr('BrandOwnerName') ">
-                        <div class="invalid-feedback">
-                            Please enter a brand owner name.
-                        </div>
+                <input type="hidden" id="Id" name="Id" value="" >
+                <input type="hidden" id="userId" name="userId" value="{{ request.session.userId }}" >
+                <input type="hidden" id="svrStatus" name="svrStatus" value="0" >
+                <input type="hidden" id="gtinId" name="gtinId" value="" >
+
+                <div class="row border mb-3 rounded" id="showGtin">
+                    <div class="col-md-12 pt-3 pb-3 alert-success">
+                        <div  class="form-label d-inline"><b>GTIN :</b> <span id="gtnSpan"></span></div>
+                        <div  class="form-label d-inline ml-4" style="margin-left: 20px;"><i class="bi bi-check-circle text-success" ></i> <span id="gtnStatusSpan"></span></div>
+                    </div>
+                </div>
+
+                <div class="row border pb-3 rounded ">
+                    
+
+                    <div class="col-md-12 border-bottom mb-2 pt-3 bg-light">
+                        <h5  class="form-label">Brand</h5>
                     </div>
 
                     <div class="col-md-3">
-                        <label  class="form-label">Data Provider Name</label>
-                        <input type="text" class="form-control" id="DataProviderName" value="" placeholder="Enter Data Provider Name" onkeyup="removeErr('DataProviderName') ">
-                        <div class="invalid-feedback">
-                            Please enter a data provider name.
-                        </div>
+                        <label  class="form-label">Brand Name *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" id="BrandName" value="" placeholder="Enter Brand Name" onkeyup="removeErr('BrandName') " maxlength="15" minlength="5">
+                        <div class="invalid-feedback" id="BrandNameErr"></div>
                     </div>
 
                     <div class="col-md-3">
-                        <label  class="form-label">Manufacturer Name</label>
-                        <input type="text" class="form-control" id="ManufacturerName" value="" placeholder="Enter Manufacturer Name" onkeyup="removeErr('ManufacturerName') ">
-                        <div class="invalid-feedback">
-                            Please enter a data manufacturer name.
-                        </div>
+                        <label  class="form-label">Brand Owner Name *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" id="BrandOwnerName" value="" placeholder="Enter Brand Owner Name" maxlength="15" minlength="5" onkeyup="removeErr('BrandOwnerName') ">
+                        <div class="invalid-feedback" id="BrandOwnerNameErr"></div>
                     </div>
 
                     <div class="col-md-3">
-                        <label  class="form-label">GPC Code</label>
-                        <input type="text" class="form-control" id="GPCCode" value="" placeholder="Enter GPC Code" onkeyup="removeErr('GPCCode') ">
-                        <div class="invalid-feedback">
-                            Please enter a GPC code.
-                        </div>
+                        <label  class="form-label">Sub Brand Name *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" maxlength="15" minlength="5" id="SubBrandName" value="" placeholder="Enter Sub Brand Name" onkeyup="removeErr('SubBrandName') ">
+                        <div class="invalid-feedback" id="SubBrandNameErr"></div>
                     </div>
 
                 </div>
+                <div class="row mt-2"></div>
 
-                <div class="row mt-2">
-                    <div class="col-md-3">
-                        <label  class="form-label">Contact Type Code</label>
-                        <input type="text" class="form-control" id="ContactTypeCode" value="" placeholder="Enter Contact Type Code" onkeyup="removeErr('ContactTypeCode') ">
-                        <div class="invalid-feedback">
-                            Please enter a contact type code.
-                        </div>
+
+                <div class="row border pb-3 rounded ">
+
+                    <div class="col-md-12 border-bottom mb-2 pt-3 bg-light">
+                        <h5  class="form-label">Contact</h5>
                     </div>
 
-                    <div class="col-md-3">
-                        <label  class="form-label">Contact</label>
-                        <input type="text" class="form-control" id="Contact" value="" placeholder="Enter Contact" onkeyup="removeErr('Contact') ">
-                        <div class="invalid-feedback" id="ContactErrMeg">
-                            Please enter a contact.
-                        </div>
+                    <div class="col-md-2">
+                        <label  class="form-label">Contact *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" id="Contact" value="" placeholder="Enter Contact" maxlength="15" minlength="5" onkeyup="removeErr('Contact') ">
+                        <div class="invalid-feedback" id="ContactErr"></div>
                     </div>
 
-                    <div class="col-md-3">
-                        <label  class="form-label">Contact Address</label>
-                        <textarea class="form-control" id="ContactAddress" value="" placeholder="Enter Contact Address" onkeyup="removeErr('ContactAddress') "></textarea>
-                        <div class="invalid-feedback">
-                            Please enter a contact address.
-                        </div>
+                    <div class="col-md-2">
+                        <label  class="form-label">Contact Type Code *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" id="ContactTypeCode" value="" placeholder="Enter Contact Type Code" maxlength="15" minlength="5" onkeyup="removeErr('ContactTypeCode') ">
+                        <div class="invalid-feedback" id="ContactTypeCodeErr"></div>
                     </div>
 
-                    <div class="col-md-3">
-                        <label  class="form-label">Contact Method Code</label>
-                        <input type="text" class="form-control" id="ContactMethodCode" value="" placeholder="Enter Contact Method Code" onkeyup="removeErr('ContactMethodCode') ">
-                        <div class="invalid-feedback">
-                            Please enter a contact method code.
-                        </div>
+                    <div class="col-md-2">
+                        <label  class="form-label">Contact Method Code *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" maxlength="15" minlength="5" id="ContactMethodCode" value="" placeholder="Enter Contact Method Code" onkeyup="removeErr('ContactMethodCode') ">
+                        <div class="invalid-feedback" id="ContactMethodCodeErr"></div>
                     </div>
 
-                </div>
+                   
 
-                <div class="row mt-2">
                     <div class="col-md-3">
-                        <label  class="form-label">Contact Details</label>
-                        <textarea class="form-control" id="ContactDetails" value="" placeholder="Enter Contact Details" onkeyup="removeErr('ContactDetails') "></textarea>
-                        <div class="invalid-feedback">
-                            Please enter a contact details.
-                        </div>
+                        <label  class="form-label">Contact Address *(min:5, max:100 -char)</label>
+                        <textarea class="form-control" id="ContactAddress" maxlength="100" minlength="5" value="" placeholder="Enter Contact Address" onkeyup="removeErr('ContactAddress') "></textarea>
+                        <div class="invalid-feedback" id="ContactAddressErr"></div>
                     </div>
 
-                    <div class="col-md-3">
-                        <label  class="form-label">Brand Name</label>
-                        <input type="text" class="form-control" id="BrandName" value="" placeholder="Enter Brand Name" onkeyup="removeErr('BrandName') ">
-                        <div class="invalid-feedback">
-                            Please enter a brand name.
-                        </div>
-                    </div>
+                  
 
                     <div class="col-md-3">
-                        <label  class="form-label">Sub Brand Name</label>
-                        <input type="text" class="form-control" id="SubBrandName" value="" placeholder="Enter Sub Brand Name" onkeyup="removeErr('SubBrandName') ">
-                        <div class="invalid-feedback">
-                            Please enter a sub brand name.
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label  class="form-label">Short Product Name</label>
-                        <input type="text" class="form-control" id="ShortProductName" value="" placeholder="Enter Short Product Name" onkeyup="removeErr('ShortProductName') ">
-                        <div class="invalid-feedback">
-                            Please enter a short product name.
-                        </div>
+                        <label  class="form-label">Contact Details *(min:5, max:100 -char)</label>
+                        <textarea class="form-control" id="ContactDetails" maxlength="100" minlength="5" value="" placeholder="Enter Contact Details" onkeyup="removeErr('ContactDetails') "></textarea>
+                        <div class="invalid-feedback" id="ContactDetailsErr"></div>
                     </div>
 
                 </div>
+                <div class="row mt-2"></div>
 
-                <div class="row mt-2">
-                    <div class="col-md-3">
-                        <label  class="form-label">Product Marketing Message</label>
-                        <textarea class="form-control" id="ProductMarketingMessage" value="" placeholder="Enter Product Marketing Message" onkeyup="removeErr('ProductMarketingMessage') "></textarea>
-                        <div class="invalid-feedback">
-                            Please enter a product marketing message.
-                        </div>
+                <div class="row border pb-3 rounded ">
+
+                    <div class="col-md-12 border-bottom mb-2 pt-3 bg-light">
+                        <h5  class="form-label">Product</h5>
                     </div>
 
                     <div class="col-md-3">
-                        <label  class="form-label">Search Key Words for Product</label>
-                        <textarea class="form-control" id="SearchKeyWordsforProduct" value="" placeholder="Enter Search Key Words for Product" onkeyup="removeErr('SearchKeyWordsforProduct') "></textarea>
-                        <div class="invalid-feedback">
-                            Please enter a search key words for product.
-                        </div>
+                        <label  class="form-label">Short Product Name *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" maxlength="15" minlength="5" id="ShortProductName" value="" placeholder="Enter Short Product Name" onkeyup="removeErr('ShortProductName') ">
+                        <div class="invalid-feedback" id="ShortProductNameErr"></div>
                     </div>
 
                     <div class="col-md-3">
-                        <label  class="form-label">Product Type Description
+                        <label  class="form-label">Product Marketing Message *(min:5, max:100 -char)</label>
+                        <textarea class="form-control" maxlength="100" minlength="5" id="ProductMarketingMessage" value="" placeholder="Enter Product Marketing Message" onkeyup="removeErr('ProductMarketingMessage') "></textarea>
+                        <div class="invalid-feedback" id="ProductMarketingMessageErr"></div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label  class="form-label">Search Key Words for Product *(min:5, max:100 -char)</label>
+                        <textarea class="form-control" maxlength="100" minlength="5" id="SearchKeyWordsforProduct" value="" placeholder="Enter Search Key Words for Product" onkeyup="removeErr('SearchKeyWordsforProduct') "></textarea>
+                        <div class="invalid-feedback" id="SearchKeyWordsforProductErr"></div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label  class="form-label">Product Type Description *(min:5, max:100 -char)
                         </label>
-                        <textarea class="form-control" id="ProductTypeDescription" value="" placeholder="Enter Product Type Description" onkeyup="removeErr('ProductTypeDescription') "></textarea>
-                        <div class="invalid-feedback">
-                            Please enter a product type description.
+                        <textarea class="form-control" maxlength="100" minlength="5" id="ProductTypeDescription" value="" placeholder="Enter Product Type Description" onkeyup="removeErr('ProductTypeDescription') " maxlength="100" minlength="5"></textarea>
+                        <div class="invalid-feedback" id="ProductTypeDescriptionErr"></div>
+                    </div>
+
+                    <div class="col-md-3 mt-2">
+                        <label  class="form-label">Data Provider Name *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" maxlength="15" minlength="5" id="DataProviderName" value="" placeholder="Enter Data Provider Name" onkeyup="removeErr('DataProviderName') ">
+                        <div class="invalid-feedback" id="DataProviderNameErr"></div>
+                    </div>
+
+                    <div class="col-md-3 mt-2">
+                        <label  class="form-label">Manufacturer Name *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" maxlength="15" minlength="5" id="ManufacturerName" value="" placeholder="Enter Manufacturer Name" onkeyup="removeErr('ManufacturerName') ">
+                        <div class="invalid-feedback" id="ManufacturerNameErr"></div>
+                    </div>
+
+                    <div class="col-md-3 mt-2">
+                        <label  class="form-label">GPC Code </label>
+                        <input type="text" class="form-control" id="GPCCode" value="" placeholder="Enter GPC Code" onkeyup="removeErr('GPCCode') ">
+                        <div class="invalid-feedback" id="GPCCodeErr"></div>
+                    </div>
+
+                    <div class="col-md-3 mt-2">
+                        <label  class="form-label">Market Availability Date </label>
+                        <input type="date" class="form-control" id="MarketAvailabilityDate" value="" onclick="removeErr('MarketAvailabilityDate') ">
+                        <div class="invalid-feedback" >
+                            Please select a market availability date.
                         </div>
+                    </div>
+
+
+
+                </div>
+
+
+
+                <div class="row mt-2"></div>
+
+                <div class="row border pb-3 rounded ">
+
+                    <div class="col-md-12 border-bottom mb-2 pt-3 bg-light">
+                        <h5  class="form-label">Specifications</h5>
                     </div>
 
                     <div class="col-md-3">
@@ -233,16 +264,12 @@
                                 <option value="km">km</option>
                                 </select>
                             </div>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" >
                                 Please enter a depth/length.
                             </div>
                         </div>
                        
                     </div>
-
-                </div>
-
-                <div class="row mt-2">
 
                     <div class="col-md-3">
                         <label  class="form-label">Height
@@ -321,73 +348,82 @@
                        
                     </div>
 
-                    <div class="col-md-3">
-                        <label  class="form-label">Market Availability Date</label>
-                        <input type="date" class="form-control" id="MarketAvailabilityDate" value="" onclick="removeErr('MarketAvailabilityDate') ">
-                        <div class="invalid-feedback">
-                            Please select a market availability date.
-                        </div>
+
+                    <div class="col-md-3 mt-2">
+                        <label  class="form-label">Allergen Containment Code *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" maxlength="15" minlength="5" id="AllergenContainmentCode" value="" placeholder="Enter Allergen Containment Code" onkeyup="removeErr('AllergenContainmentCode') ">
+                        <div class="invalid-feedback" id="AllergenContainmentCodeErr"></div>
                     </div>
 
-                </div>
-
-                <div class="row mt-2">
-                    <div class="col-md-3">
-                        <label  class="form-label">Allergen Containment Code</label>
-                        <input type="text" class="form-control" id="AllergenContainmentCode" value="" placeholder="Enter Allergen Containment Code" onkeyup="removeErr('AllergenContainmentCode') ">
-                        <div class="invalid-feedback">
-                            Please enter a allergen containment code.
-                        </div>
+                    <div class="col-md-3 mt-2">
+                        <label  class="form-label">Allergen Type Code *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" maxlength="15" minlength="5" id="AllergenTypeCode" value="" placeholder="Enter Allergen Type Code" onkeyup="removeErr('AllergenTypeCode') ">
+                        <div class="invalid-feedback" id="AllergenTypeCodeErr"></div>
                     </div>
 
-                    <div class="col-md-3">
-                        <label  class="form-label">Allergen Type Code</label>
-                        <input type="text" class="form-control" id="AllergenTypeCode" value="" placeholder="Enter Allergen Type Code" onkeyup="removeErr('AllergenTypeCode') ">
-                        <div class="invalid-feedback">
-                            Please enter a allergen type code.
-                        </div>
+                    <div class="col-md-3 mt-2">
+                        <label  class="form-label">Allergen Statement *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" maxlength="15" minlength="5" id="AllergenStatement" value="" placeholder="Enter Allergen Statement" onkeyup="removeErr('AllergenStatement') ">
+                        <div class="invalid-feedback" id="AllergenStatementErr"></div>
                     </div>
 
-                    <div class="col-md-3">
-                        <label  class="form-label">Allergen Statement</label>
-                        <input type="text" class="form-control" id="AllergenStatement" value="" placeholder="Enter Allergen Statement" onkeyup="removeErr('AllergenStatement') ">
-                        <div class="invalid-feedback">
-                            Please enter a allergen statement.
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <label  class="form-label">Ingredient Statement
+                    <div class="col-md-3 mt-2">
+                        <label  class="form-label">Ingredient Statement *(min:5, max:100 -char)
                         </label>
-                        <textarea class="form-control" id="IngredientStatement" value="" placeholder="Enter Ingredient Statement" onkeyup="removeErr('IngredientStatement') "></textarea>
+                        <textarea class="form-control" maxlength="100" minlength="15" id="IngredientStatement" value="" placeholder="Enter Ingredient Statement" onkeyup="removeErr('IngredientStatement') "></textarea>
+                        <div class="invalid-feedback" id="IngredientStatementErr"></div>
+                    </div>
+
+                    <div class="col-md-3 ">
+                        <label  class="form-label">Feed Type Certification
+                        </label>
+                        <select class="form-select" id="FeedTypeCertification" name="FeedTypeCertification" onchange="removeErr('FeedTypeCertification') ">
+                            <option value="">Please select feed type certification</option>
+                            <option value="Halal">Halal</option>
+                            <option value="Kosher">Kosher</option>
+                            <option value="Other">Other</option>
+                        </select>
                         <div class="invalid-feedback">
-                            Please enter a ingredient statement.
+                            Please select a feed type certification.
                         </div>
                     </div>
 
+                    <div class="col-md-3">
+                        <label  class="form-label">&nbsp;
+                        </label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="AllergenDeclarationsIndicator" >
+                            <label class="form-check-label" for="invalidCheck3">
+                                Allergen Declarations Indicator
+                            </label>
+                        
+                        </div>
 
-                </div>
-
-                <div class="col-12">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" id="AllergenDeclarationsIndicator" >
-                      <label class="form-check-label" for="invalidCheck3">
-                        Allergen Declarations Indicator
-                      </label>
-                     
                     </div>
+
+                   
+
                 </div>
-
-
-
-                
 
 
             
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary" formnovalidate id="btnSubmit">
+                    <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true" id="btnSubmitLoader"></span>
+                    <span id="btnSubmitText">Save</span>
+                </button>
+                <button type="button" class="btn btn-primary d-none" onclick="registerGtin(2)" id="gtinRegister">
+                    <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true" id="btnRegisterLoader"></span>
+                    <span >Register</span>
+                    
+                </button>
+                <button type="button" class="btn btn-success d-none" onclick="registerGtin(3)" id="gtinActivate">
+                    <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true" id="btnActivateLoader"></span>
+                    <span >Activate</span>
+                    
+                </button>
             </div>
         </form>
       </div>
@@ -396,6 +432,8 @@
 
 
 <script>
+
+var isValidate = false ;
 
 $( document ).ready(function() {
     $('#example').DataTable({});
@@ -406,31 +444,35 @@ function removeErr(id){
     $('#'+id).removeClass('is-invalid');
 }
 
-function validateContact(val)
-{
-  var regx = /^[6-9]\d{9}$/ ;
-  if(regx.test(val))
-    return false;
-  else
-    return true;
+function isASCII(str) {
+    return /^[\x00-\x7F]*$/.test(str);
 }
 
 $( "#addNewGtinProduct" ).submit(function(e) {
     e.preventDefault();
+   
+    var BrandName= $('#BrandName').val().replace(/^\s+|\s+$/gm,'');
     var BrandOwnerName= $('#BrandOwnerName').val()
-    var DataProviderName= $('#DataProviderName').val()
-    var ManufacturerName= $('#ManufacturerName').val()
-    var ContactTypeCode= $('#ContactTypeCode').val()
-    var Contact= $('#Contact').val()
-    var ContactAddress= $('#ContactAddress').val()
-    var ContactMethodCode= $('#ContactMethodCode').val()
-    var ContactDetails= $('#ContactDetails').val()
-    var BrandName= $('#BrandName').val()
     var SubBrandName= $('#SubBrandName').val()
-    var ShortProductName= $('#ShortProductName').val()
+
+
+    var Contact= $('#Contact').val()
+    var ContactTypeCode= $('#ContactTypeCode').val()
+    var ContactMethodCode= $('#ContactMethodCode').val()
+    var ContactAddress= $('#ContactAddress').val()
+    var ContactDetails= $('#ContactDetails').val()
+
+
+    var ShortProductName= $('#ShortProductName').val().replace(/^\s+|\s+$/gm,'');
     var ProductMarketingMessage= $('#ProductMarketingMessage').val()
     var SearchKeyWordsforProduct= $('#SearchKeyWordsforProduct').val()
-    var ProductTypeDescription= $('#ProductTypeDescription').val()
+    var ProductTypeDescription= $('#ProductTypeDescription').val().replace(/^\s+|\s+$/gm,'');
+    var DataProviderName= $('#DataProviderName').val()
+    var ManufacturerName= $('#ManufacturerName').val()
+    var GPCCode= $('#GPCCode').val()
+    var MarketAvailabilityDate= $('#MarketAvailabilityDate').val()
+
+
     var Length= $('#Length').val()
     var LengthUnit= $('#LengthUnit').val()
     var Height= $('#Height').val()
@@ -439,103 +481,404 @@ $( "#addNewGtinProduct" ).submit(function(e) {
     var WidthUnit= $('#WidthUnit').val()
     var GrossWeight= $('#GrossWeight').val()
     var GrossWeightUnit= $('#GrossWeightUnit').val()
-    var MarketAvailabilityDate= $('#MarketAvailabilityDate').val()
+    
     var AllergenContainmentCode= $('#AllergenContainmentCode').val()
     var AllergenTypeCode= $('#AllergenTypeCode').val()
     var AllergenStatement= $('#AllergenStatement').val()
     var IngredientStatement= $('#IngredientStatement').val()
+    var FeedTypeCertification = $('#FeedTypeCertification').val()
     var AllergenDeclarationsIndicator= $('#AllergenDeclarationsIndicator')[0].checked
+
+    var Id = $('#Id').val()
+    var userId = $('#userId').val()
+    var svrStatus = $('#svrStatus').val()
+
+    if( {{ request.session.userRole }} != 1 && svrStatus == 3){
+        return false;
+    }
+
+    isValidate = false;
+
+    validateField(BrandName, 'BrandName', "brand name", 5, 15)
+    validateField(ShortProductName, 'ShortProductName', "short product name", 5, 15)
+    validateField(ProductTypeDescription, 'ProductTypeDescription', "product type description", 5, 15)
+
+    if(svrStatus == 0 || svrStatus == 1){
+        checkValidateField(BrandOwnerName, 'BrandOwnerName', "brand owner name", 5, 15)
+        checkValidateField(SubBrandName, 'SubBrandName', "sub brand name", 5, 15)
+        checkValidateField(Contact, 'Contact', "contact", 5, 15)
+        checkValidateField(ContactTypeCode, 'ContactTypeCode', "contact type code", 5, 15)
+        checkValidateField(ContactMethodCode, 'ContactMethodCode', "contact method code", 5, 15)
+        checkValidateField(ContactAddress, 'ContactAddress', "contact address", 5, 15)
+        checkValidateField(ContactDetails, 'ContactDetails', "contact details", 5, 15)
+        checkValidateField(ProductMarketingMessage, 'ProductMarketingMessage', "product marketing message", 5, 15)
+        checkValidateField(SearchKeyWordsforProduct, 'SearchKeyWordsforProduct', "search key words for product", 5, 15)
+        checkValidateField(DataProviderName, 'DataProviderName', "data provider name", 5, 15)
+        checkValidateField(ManufacturerName, 'ManufacturerName', "manu facturer name", 5, 15)
+        checkValidateField(AllergenContainmentCode, 'AllergenContainmentCode', "allergen containment code", 5, 15)
+        checkValidateField(AllergenTypeCode, 'AllergenTypeCode', "allergen type code", 5, 15)
+        checkValidateField(AllergenStatement, 'AllergenStatement', "allergen statement", 5, 15)
+        checkValidateField(IngredientStatement, 'IngredientStatement', "ingredient statement", 5, 15)
+
+        
+    }else{
+        validateField(BrandOwnerName, 'BrandOwnerName', "brand owner name", 5, 15)
+        validateField(SubBrandName, 'SubBrandName', "sub brand name", 5, 15)
+        validateField(Contact, 'Contact', "contact", 5, 15)
+        validateField(ContactTypeCode, 'ContactTypeCode', "contact type code", 5, 15)
+        validateField(ContactMethodCode, 'ContactMethodCode', "contact method code", 5, 15)
+        validateField(ContactAddress, 'ContactAddress', "contact address", 5, 15)
+        validateField(ContactDetails, 'ContactDetails', "contact details", 5, 15)
+        validateField(ProductMarketingMessage, 'ProductMarketingMessage', "product marketing message", 5, 15)
+        validateField(SearchKeyWordsforProduct, 'SearchKeyWordsforProduct', "search key words for product", 5, 15)
+        validateField(DataProviderName, 'DataProviderName', "data provider name", 5, 15)
+        validateField(ManufacturerName, 'ManufacturerName', "manu facturer name", 5, 15)
+    
+        if(MarketAvailabilityDate == ""){
+            $('#MarketAvailabilityDate').addClass('is-invalid')
+            if(!isValidate) $('#MarketAvailabilityDate').focus()
+            isValidate = true;
+        }
+    
+        if(Length == ""){
+            $('#Length').addClass('is-invalid')
+            if(!isValidate) $('#Length').focus()
+            isValidate = true;
+        }
+    
+        if(Height == ""){
+            $('#Height').addClass('is-invalid')
+            if(!isValidate) $('#Height').focus()
+            isValidate = true;
+        }
+    
+        if(Width == ""){
+            $('#Width').addClass('is-invalid')
+            if(!isValidate) $('#Width').focus()
+            isValidate = true;
+        }
+    
+        if(GrossWeight == ""){
+            $('#GrossWeight').addClass('is-invalid')
+            if(!isValidate) $('#GrossWeight').focus()
+            isValidate = true;
+        }
+    
+        validateField(AllergenContainmentCode, 'AllergenContainmentCode', "allergen containment code", 5, 15)
+        validateField(AllergenTypeCode, 'AllergenTypeCode', "allergen type code", 5, 15)
+        validateField(AllergenStatement, 'AllergenStatement', "allergen statement", 5, 15)
+        validateField(IngredientStatement, 'IngredientStatement', "ingredient statement", 5, 15)
+    
+        if(FeedTypeCertification == ""){
+            $('#FeedTypeCertification').addClass('is-invalid')
+            if(!isValidate) $('#FeedTypeCertification').focus()
+            isValidate = true;
+        }
+    }
+
+
+    var str2 = "pork";
+    console.log(FeedTypeCertification);
+    var str3 = "ham";
+    
+    if(FeedTypeCertification != "Other" && FeedTypeCertification != "" && IngredientStatement !=""){
+        var removedSpacesText = IngredientStatement.split(" ").join("").toLowerCase();
+        var errDis = '';
+        if(removedSpacesText.indexOf(str2) != -1 && removedSpacesText.indexOf(str3) != -1) { errDis = 'Pork and Ham' }
+        else if(removedSpacesText.indexOf(str2) != -1) { errDis = 'Pork' }
+        else if(removedSpacesText.indexOf(str3) != -1) { errDis = 'Ham' }
+
+
+        if(removedSpacesText.indexOf(str2) != -1 || removedSpacesText.indexOf(str3) != -1){
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: errDis+' Found',
+                text: 'You cant add '+errDis+' with “Halal” and “Kosher”, Please remove '+errDis+' from ingredient statement',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            isValidate = true;
+        }
+    }
+   
+    if(isValidate) return false;
+
+    $('#btnSubmitLoader').removeClass('d-none');
+    $('#btnSubmit').prop('disabled', true);
+
+    
+
+    if(Id == ""){
+        $.ajax({
+            url: serverURL+"getgtin",
+            method: 'POST',
+            mode: 'cors',
+            dataType: 'json',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            data : {
+                'userid':userId,
+            },
+            success: function (response) {
+                console.log(response)
+                if(response.status == 1){
+                    $.ajax({
+                        url: "/add-gtin-product-entry/",
+                        method: 'POST',
+                        dataType: 'json',
+                        headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                        data : {
+                            'gtin':response.gtin,
+                            'BrandName':BrandName,
+                            'ShortProductName':ShortProductName,
+                            'ProductTypeDescription':ProductTypeDescription,
+                            'svrStatus':svrStatus,
+                            'Id' :Id,
+                            'BrandOwnerName':BrandOwnerName,
+                            'DataProviderName':DataProviderName,
+                            'ManufacturerName':ManufacturerName,
+                            'ContactTypeCode':ContactTypeCode,
+                            'Contact':Contact,
+                            'ContactAddress':ContactAddress,
+                            'ContactMethodCode':ContactMethodCode,
+                            'ContactDetails':ContactDetails,
+                            'SubBrandName':SubBrandName,
+                            'ProductMarketingMessage':ProductMarketingMessage,
+                            'SearchKeyWordsforProduct':SearchKeyWordsforProduct,
+                            'Length':Length,
+                            'LengthUnit':LengthUnit,
+                            'Height':Height,
+                            'HeightUnit':HeightUnit,
+                            'Width':Width,
+                            'WidthUnit':WidthUnit,
+                            'GrossWeight':GrossWeight,
+                            'GrossWeightUnit':GrossWeightUnit,
+                            'MarketAvailabilityDate':MarketAvailabilityDate,
+                            'AllergenContainmentCode':AllergenContainmentCode,
+                            'AllergenTypeCode':AllergenTypeCode,
+                            'AllergenStatement':AllergenStatement,
+                            'IngredientStatement':IngredientStatement,
+                            'AllergenDeclarationsIndicator':AllergenDeclarationsIndicator,
+                            'GPCCode':GPCCode,
+                            'FeedTypeCertification':FeedTypeCertification,
+                        
+                        },
+
+                        success: function (output) {
+                            console.log(output)
+                            if(output.status == 1){
+                                $('#Id').val(output.id)
+                                $('#svrStatus').val(1)
+
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'Success',
+                                        text: 'Successfully add new product with gtin '+response.gtin,
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    setTimeout(function()
+                                    {
+                                        getGTINProduct();
+                                        $('#gtinModal').modal('hide');
+                                    },500);
+                                    $('#btnSubmitLoader').addClass('d-none');
+                                    $('#btnSubmit').prop('disabled', false);
+
+                            }else{
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: 'Failed add new product with gtin '+response.gtin,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                $('#btnSubmitLoader').addClass('d-none');
+                                $('#btnSubmit').prop('disabled', false);
+
+                            }
+                        }
+                    });
+
+                }else{
+                    Swal.fire({
+                    title: 'Oops?',
+                    text: "GTIN id can't allocated for this product!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Try again'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        $( "#addNewGtinProduct" ).submit();
+                    }
+                    })
+
+                    $('#btnSubmitLoader').addClass('d-none');
+                    $('#btnSubmit').prop('disabled', false);
+                }
+
+            }
+        });
+
+
+    }else{
+        $.ajax({
+            url: "/add-gtin-product-entry/",
+            method: 'POST',
+            dataType: 'json',
+            headers: {'X-CSRFToken': '{{ csrf_token }}'},
+            data : {
+                'gtin':'',
+                'BrandName':BrandName,
+                'ShortProductName':ShortProductName,
+                'ProductTypeDescription':ProductTypeDescription,
+                'svrStatus':svrStatus,
+                'Id' :Id,
+                'BrandOwnerName':BrandOwnerName,
+                'DataProviderName':DataProviderName,
+                'ManufacturerName':ManufacturerName,
+                'ContactTypeCode':ContactTypeCode,
+                'Contact':Contact,
+                'ContactAddress':ContactAddress,
+                'ContactMethodCode':ContactMethodCode,
+                'ContactDetails':ContactDetails,
+                'SubBrandName':SubBrandName,
+                'ProductMarketingMessage':ProductMarketingMessage,
+                'SearchKeyWordsforProduct':SearchKeyWordsforProduct,
+                'Length':Length,
+                'LengthUnit':LengthUnit,
+                'Height':Height,
+                'HeightUnit':HeightUnit,
+                'Width':Width,
+                'WidthUnit':WidthUnit,
+                'GrossWeight':GrossWeight,
+                'GrossWeightUnit':GrossWeightUnit,
+                'MarketAvailabilityDate':MarketAvailabilityDate,
+                'AllergenContainmentCode':AllergenContainmentCode,
+                'AllergenTypeCode':AllergenTypeCode,
+                'AllergenStatement':AllergenStatement,
+                'IngredientStatement':IngredientStatement,
+                'AllergenDeclarationsIndicator':AllergenDeclarationsIndicator,
+                'GPCCode':GPCCode,
+                'FeedTypeCertification':FeedTypeCertification,
+            
+            },
+
+            success: function (output) {
+                console.log(output)
+                if(output.status == 1){
+                    $('#Id').val(output.id)
+                    $('#svrStatus').val(1)
+
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Successfully update product ',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        setTimeout(function()
+                        {
+                            getGTINProduct();
+                            $('#gtinModal').modal('hide');
+                        },500);
+                        $('#btnSubmitLoader').addClass('d-none');
+                        $('#btnSubmit').prop('disabled', false);
+
+                }else{
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to update product ',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    $('#btnSubmitLoader').addClass('d-none');
+                    $('#btnSubmit').prop('disabled', false);
+
+                }
+            }
+        });
+    }
+    
+});
+
+function registerGtin(status){
+    
+    var BrandName= $('#BrandName').val().replace(/^\s+|\s+$/gm,'');
+    var BrandOwnerName= $('#BrandOwnerName').val().replace(/^\s+|\s+$/gm,'');
+    var SubBrandName= $('#SubBrandName').val().replace(/^\s+|\s+$/gm,'');
+
+    var Contact= $('#Contact').val().replace(/^\s+|\s+$/gm,'');
+    var ContactTypeCode= $('#ContactTypeCode').val().replace(/^\s+|\s+$/gm,'');
+    var ContactMethodCode= $('#ContactMethodCode').val().replace(/^\s+|\s+$/gm,'');
+    var ContactAddress= $('#ContactAddress').val().replace(/^\s+|\s+$/gm,'');
+    var ContactDetails= $('#ContactDetails').val().replace(/^\s+|\s+$/gm,'');
+
+
+    var ShortProductName= $('#ShortProductName').val().replace(/^\s+|\s+$/gm,'');
+    var ProductMarketingMessage= $('#ProductMarketingMessage').val().replace(/^\s+|\s+$/gm,'');
+    var SearchKeyWordsforProduct= $('#SearchKeyWordsforProduct').val().replace(/^\s+|\s+$/gm,'');
+    var ProductTypeDescription= $('#ProductTypeDescription').val().replace(/^\s+|\s+$/gm,'');
+    var DataProviderName= $('#DataProviderName').val().replace(/^\s+|\s+$/gm,'');
+    var ManufacturerName= $('#ManufacturerName').val().replace(/^\s+|\s+$/gm,'');
+    var GPCCode= $('#GPCCode').val().replace(/^\s+|\s+$/gm,'');
+    var MarketAvailabilityDate= $('#MarketAvailabilityDate').val()
+
+
+    var Length= $('#Length').val()
+    var LengthUnit= $('#LengthUnit').val()
+    var Height= $('#Height').val()
+    var HeightUnit= $('#HeightUnit').val()
+    var Width= $('#Width').val()
+    var WidthUnit= $('#WidthUnit').val()
+    var GrossWeight= $('#GrossWeight').val()
+    var GrossWeightUnit= $('#GrossWeightUnit').val()
+    var AllergenContainmentCode= $('#AllergenContainmentCode').val().replace(/^\s+|\s+$/gm,'');
+    var AllergenTypeCode= $('#AllergenTypeCode').val().replace(/^\s+|\s+$/gm,'');
+    var AllergenStatement= $('#AllergenStatement').val().replace(/^\s+|\s+$/gm,'');
+    var IngredientStatement= $('#IngredientStatement').val().replace(/^\s+|\s+$/gm,'');
+    var FeedTypeCertification = $('#FeedTypeCertification').val()
+    var AllergenDeclarationsIndicator= $('#AllergenDeclarationsIndicator')[0].checked
+    
+
     var Id = $('#Id').val()
     var userId = $('#userId').val()
 
-    var isValidate = false;
-    if(BrandOwnerName == ""){
-        $('#BrandOwnerName').addClass('is-invalid')
-        $('#BrandOwnerName').focus()
-        isValidate = true;
-    }
+    var svrStatus = status
+    var svrStatusChk = $('#svrStatus').val()
+    svrStatusChk = parseInt(svrStatusChk) + 1;
 
-    if(DataProviderName == ""){
-        $('#DataProviderName').addClass('is-invalid')
-        if(!isValidate) $('#DataProviderName').focus()
-        isValidate = true;
-    }
+    isValidate = false;
 
-    if(ManufacturerName == ""){
-        $('#ManufacturerName').addClass('is-invalid')
-        if(!isValidate) $('#ManufacturerName').focus()
-        isValidate = true;
-    }
+    if(svrStatus != svrStatusChk) return false;
 
-    if(ContactTypeCode == ""){
-        $('#ContactTypeCode').addClass('is-invalid')
-        if(!isValidate) $('#ContactTypeCode').focus()
-        isValidate = true;
-    }
+    validateField(BrandName, 'BrandName', "brand name", 5, 15)
+    validateField(BrandOwnerName, 'BrandOwnerName', "brand owner name", 5, 15)
+    validateField(SubBrandName, 'SubBrandName', "sub brand name", 5, 15)
+    validateField(Contact, 'Contact', "contact", 5, 15)
+    validateField(ContactTypeCode, 'ContactTypeCode', "contact type code", 5, 15)
+    validateField(ContactMethodCode, 'ContactMethodCode', "contact method code", 5, 15)
+    validateField(ContactAddress, 'ContactAddress', "contact address", 5, 15)
+    validateField(ContactDetails, 'ContactDetails', "contact details", 5, 15)
+    validateField(ShortProductName, 'ShortProductName', "short product name", 5, 15)
+    validateField(ProductMarketingMessage, 'ProductMarketingMessage', "product marketing message", 5, 15)
+    validateField(SearchKeyWordsforProduct, 'SearchKeyWordsforProduct', "search key words for product", 5, 15)
+    validateField(ProductTypeDescription, 'ProductTypeDescription', "product type description", 5, 15)
+    validateField(DataProviderName, 'DataProviderName', "data provider name", 5, 15)
+    validateField(ManufacturerName, 'ManufacturerName', "manu facturer name", 5, 15)
 
-    if(Contact == ""){
-        $('#Contact').addClass('is-invalid')
-        $('#ContactErrMeg').html('Please enter a contact.')
-        if(!isValidate) $('#Contact').focus()
-        isValidate = true;
-    }else if( validateContact(Contact) ){
-        $('#Contact').addClass('is-invalid')
-        $('#ContactErrMeg').html('Please enter a valid contact number.')
-        if(!isValidate) $('#Contact').focus()
-        isValidate = true;
-    }
-
-    if(ContactAddress == ""){
-        $('#ContactAddress').addClass('is-invalid')
-        if(!isValidate) $('#ContactAddress').focus()
-        isValidate = true;
-    }
-
-    if(ContactMethodCode == ""){
-        $('#ContactMethodCode').addClass('is-invalid')
-        if(!isValidate) $('#ContactMethodCode').focus()
-        isValidate = true;
-    }
-
-    if(ContactDetails == ""){
-        $('#ContactDetails').addClass('is-invalid')
-        if(!isValidate) $('#ContactDetails').focus()
-        isValidate = true;
-    }
-
-    if(BrandName == ""){
-        $('#BrandName').addClass('is-invalid')
-        if(!isValidate) $('#BrandName').focus()
-        isValidate = true;
-    }
-
-    if(SubBrandName == ""){
-        $('#SubBrandName').addClass('is-invalid')
-        if(!isValidate) $('#SubBrandName').focus()
-        isValidate = true;
-    }
-
-    if(ShortProductName == ""){
-        $('#ShortProductName').addClass('is-invalid')
-        if(!isValidate) $('#ShortProductName').focus()
-        isValidate = true;
-    }
-
-    if(ProductMarketingMessage == ""){
-        $('#ProductMarketingMessage').addClass('is-invalid')
-        if(!isValidate) $('#ProductMarketingMessage').focus()
-        isValidate = true;
-    }
-
-    if(SearchKeyWordsforProduct == ""){
-        $('#SearchKeyWordsforProduct').addClass('is-invalid')
-        if(!isValidate) $('#SearchKeyWordsforProduct').focus()
-        isValidate = true;
-    }
-
-    if(ProductTypeDescription == ""){
-        $('#ProductTypeDescription').addClass('is-invalid')
-        if(!isValidate) $('#ProductTypeDescription').focus()
+    if(MarketAvailabilityDate == ""){
+        $('#MarketAvailabilityDate').addClass('is-invalid')
+        if(!isValidate) $('#MarketAvailabilityDate').focus()
         isValidate = true;
     }
 
@@ -563,190 +906,236 @@ $( "#addNewGtinProduct" ).submit(function(e) {
         isValidate = true;
     }
 
-    if(MarketAvailabilityDate == ""){
-        $('#MarketAvailabilityDate').addClass('is-invalid')
-        if(!isValidate) $('#MarketAvailabilityDate').focus()
+    validateField(AllergenContainmentCode, 'AllergenContainmentCode', "allergen containment code", 5, 15)
+    validateField(AllergenTypeCode, 'AllergenTypeCode', "allergen type code", 5, 15)
+    validateField(AllergenStatement, 'AllergenStatement', "allergen statement", 5, 15)
+    validateField(IngredientStatement, 'IngredientStatement', "ingredient statement", 5, 15)
+
+    if(FeedTypeCertification == ""){
+        $('#FeedTypeCertification').addClass('is-invalid')
+        if(!isValidate) $('#FeedTypeCertification').focus()
         isValidate = true;
     }
 
-    if(AllergenContainmentCode == ""){
-        $('#AllergenContainmentCode').addClass('is-invalid')
-        if(!isValidate) $('#AllergenContainmentCode').focus()
-        isValidate = true;
-    }
+    var str2 = "pork";
+    console.log(FeedTypeCertification);
+    var str3 = "ham";
+    
+    if(FeedTypeCertification != "Other" && FeedTypeCertification != "" && IngredientStatement !=""){
+        var removedSpacesText = IngredientStatement.split(" ").join("").toLowerCase();
+        var errDis = '';
+        if(removedSpacesText.indexOf(str2) != -1 && removedSpacesText.indexOf(str3) != -1) { errDis = 'Pork and Ham' }
+        else if(removedSpacesText.indexOf(str2) != -1) { errDis = 'Pork' }
+        else if(removedSpacesText.indexOf(str3) != -1) { errDis = 'Ham' }
 
-    if(AllergenTypeCode == ""){
-        $('#AllergenTypeCode').addClass('is-invalid')
-        if(!isValidate) $('#AllergenTypeCode').focus()
-        isValidate = true;
-    }
 
-    if(AllergenStatement == ""){
-        $('#AllergenStatement').addClass('is-invalid')
-        if(!isValidate) $('#AllergenStatement').focus()
-        isValidate = true;
+        if(removedSpacesText.indexOf(str2) != -1 || removedSpacesText.indexOf(str3) != -1){
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: errDis+' Found',
+                text: 'You cant add '+errDis+' with “Halal” and “Kosher”, Please remove '+errDis+' from ingredient statement',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            isValidate = true;
+        }
     }
-
-    if(IngredientStatement == ""){
-        $('#IngredientStatement').addClass('is-invalid')
-        if(!isValidate) $('#IngredientStatement').focus()
-        isValidate = true;
-    }
-
+    
     if(isValidate) return false;
+    var gtinId = $('#gtinId').val()
 
-    if(Id == ""){
-        $.ajax({
-            url: serverURL+"getgtin",
-            method: 'POST',
-            mode: 'cors',
-            dataType: 'json',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-            },
-            data : {
-                'userid':userId,
-            },
-            success: function (response) {
-                console.log(response)
-                if(response.status == 1){
-                
-                    $.ajax({
-                        url: "/add-gtin-product-entry/",
-                        method: 'POST',
-                        dataType: 'json',
-                        headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                        data : {
-                            'gtin':response.gtin,
-                            'BrandOwnerName':BrandOwnerName,
-                            'DataProviderName':DataProviderName,
-                            'ManufacturerName':ManufacturerName,
-                            'ContactTypeCode':ContactTypeCode,
-                            'Contact':Contact,
-                            'ContactAddress':ContactAddress,
-                            'ContactMethodCode':ContactMethodCode,
-                            'ContactDetails':ContactDetails,
-                            'BrandName':BrandName,
-                            'SubBrandName':SubBrandName,
-                            'ShortProductName':ShortProductName,
-                            'ProductMarketingMessage':ProductMarketingMessage,
-                            'SearchKeyWordsforProduct':SearchKeyWordsforProduct,
-                            'ProductTypeDescription':ProductTypeDescription,
-                            'Length':Length,
-                            'LengthUnit':LengthUnit,
-                            'Height':Height,
-                            'HeightUnit':HeightUnit,
-                            'Width':Width,
-                            'WidthUnit':WidthUnit,
-                            'GrossWeight':GrossWeight,
-                            'GrossWeightUnit':GrossWeightUnit,
-                            'MarketAvailabilityDate':MarketAvailabilityDate,
-                            'AllergenContainmentCode':AllergenContainmentCode,
-                            'AllergenTypeCode':AllergenTypeCode,
-                            'AllergenStatement':AllergenStatement,
-                            'IngredientStatement':IngredientStatement,
-                            'AllergenDeclarationsIndicator':AllergenDeclarationsIndicator,
-                            'Id' :Id
-                        
-                        },
+    $('#btnRegisterLoader').removeClass('d-none');
+    $('#btnActivateLoader').removeClass('d-none');
+    $('#gtinActivate').prop('disabled', true);
+    $('#gtinRegister').prop('disabled', true);
 
-                        success: function (output) {
-                            if(output.status == 1){
+    
+
+    $.ajax({
+        url: serverURL+"updategtinStatus",
+        method: 'POST',
+        mode: 'cors',
+        dataType: 'json',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+        },
+        data : {
+            'gtinId':gtinId,
+            'status':status
+        },
+        success: function (response) {
+            console.log(response)
+            if(response.status == 1){
+
+                $.ajax({
+                    url: "/add-gtin-product-entry/",
+                    method: 'POST',
+                    dataType: 'json',
+                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
+                    data : {
+                        'gtin':'',
+                        'BrandName':BrandName,
+                        'ShortProductName':ShortProductName,
+                        'ProductTypeDescription':ProductTypeDescription,
+                        'svrStatus':svrStatus,
+                        'Id' :Id,
+                        'BrandOwnerName':BrandOwnerName,
+                        'DataProviderName':DataProviderName,
+                        'ManufacturerName':ManufacturerName,
+                        'ContactTypeCode':ContactTypeCode,
+                        'Contact':Contact,
+                        'ContactAddress':ContactAddress,
+                        'ContactMethodCode':ContactMethodCode,
+                        'ContactDetails':ContactDetails,
+                        'SubBrandName':SubBrandName,
+                        'ProductMarketingMessage':ProductMarketingMessage,
+                        'SearchKeyWordsforProduct':SearchKeyWordsforProduct,
+                        'Length':Length,
+                        'LengthUnit':LengthUnit,
+                        'Height':Height,
+                        'HeightUnit':HeightUnit,
+                        'Width':Width,
+                        'WidthUnit':WidthUnit,
+                        'GrossWeight':GrossWeight,
+                        'GrossWeightUnit':GrossWeightUnit,
+                        'MarketAvailabilityDate':MarketAvailabilityDate,
+                        'AllergenContainmentCode':AllergenContainmentCode,
+                        'AllergenTypeCode':AllergenTypeCode,
+                        'AllergenStatement':AllergenStatement,
+                        'IngredientStatement':IngredientStatement,
+                        'AllergenDeclarationsIndicator':AllergenDeclarationsIndicator,
+                        'GPCCode':GPCCode,
+                        'FeedTypeCertification':FeedTypeCertification,
+                    
+                    },
+            
+                    success: function (output) {
+                        console.log(output)
+                        if(output.status == 1){
+                            var message ='';
+                            if(status == 2) message = "Successfully registered product";
+                            else if(status == 3) message = "Successfully activated product";
+                            $('#Id').val(output.id)
+                            $('#svrStatus').val(1)
+            
                                 Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Success',
+                                    text: message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                setTimeout(function()
+                                {
+                                    getGTINProduct();
+                                    $('#gtinModal').modal('hide');
+                                },500);
+
+                                $('#gtinActivate').prop('disabled', false);
+                                $('#gtinRegister').prop('disabled', false);
+                                $('#btnRegisterLoader').addClass('d-none');
+                                $('#btnActivateLoader').addClass('d-none');
+            
+                        }else{
+                            var messageErr ='';
+                            if(status == 2) messageErr = "Failed to register product";
+                            else if(status == 3) messageErr = "Failed to activate product";
+
+                            Swal.fire({
                                 position: 'center',
-                                icon: 'success',
-                                title: 'Success',
-                                text: 'Successfully add new product with gtin '+response.gtin,
+                                icon: 'error',
+                                title: 'Error',
+                                text: messageErr,
                                 showConfirmButton: false,
                                 timer: 1500
-                                })
+                            })
 
-                            }
-                        }
-                    });
-
-                }else{
-                    Swal.fire({
-                    title: 'Oops?',
-                    text: "GTIN id can't allocated for this product!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Try again'
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                        $( "#addNewGtinProduct" ).submit();
-                    }
-                    })
-                }
-                
-            }
-        });
-
-    }else{
-
-        $.ajax({
-            url: "/add-gtin-product-entry/",
-            method: 'POST',
-            dataType: 'json',
-            headers: {'X-CSRFToken': '{{ csrf_token }}'},
-            data : {
-                'gtin':'',
-                'BrandOwnerName':BrandOwnerName,
-                'DataProviderName':DataProviderName,
-                'ManufacturerName':ManufacturerName,
-                'ContactTypeCode':ContactTypeCode,
-                'Contact':Contact,
-                'ContactAddress':ContactAddress,
-                'ContactMethodCode':ContactMethodCode,
-                'ContactDetails':ContactDetails,
-                'BrandName':BrandName,
-                'SubBrandName':SubBrandName,
-                'ShortProductName':ShortProductName,
-                'ProductMarketingMessage':ProductMarketingMessage,
-                'SearchKeyWordsforProduct':SearchKeyWordsforProduct,
-                'ProductTypeDescription':ProductTypeDescription,
-                'Length':Length,
-                'LengthUnit':LengthUnit,
-                'Height':Height,
-                'HeightUnit':HeightUnit,
-                'Width':Width,
-                'WidthUnit':WidthUnit,
-                'GrossWeight':GrossWeight,
-                'GrossWeightUnit':GrossWeightUnit,
-                'MarketAvailabilityDate':MarketAvailabilityDate,
-                'AllergenContainmentCode':AllergenContainmentCode,
-                'AllergenTypeCode':AllergenTypeCode,
-                'AllergenStatement':AllergenStatement,
-                'IngredientStatement':IngredientStatement,
-                'AllergenDeclarationsIndicator':AllergenDeclarationsIndicator,
-                'Id' :Id
+                            $('#gtinActivate').prop('disabled', false);
+                            $('#gtinRegister').prop('disabled', false);
+                            $('#btnRegisterLoader').addClass('d-none');
+                            $('#btnActivateLoader').addClass('d-none');
             
-            },
+                        }
+                    }
+                });
 
-            success: function (output) {
-                if(output.status == 1){
-                    Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Success',
-                    text: 'Successfully update product ',
-                    showConfirmButton: false,
-                    timer: 1500
-                    })
 
+
+            }else{
+                var mesgErr ='';
+                if(status == 2) mesgErr = "Failed to register";
+                else if(status == 3) mesgErr = "Failed to activate";
+
+                Swal.fire({
+                title: 'Oops?',
+                text: mesgErr,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Try again'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    registerGtin(status);
                 }
+                })
+
+                $('#gtinActivate').prop('disabled', false);
+                $('#gtinRegister').prop('disabled', false);
+                $('#btnRegisterLoader').addClass('d-none');
+                $('#btnActivateLoader').addClass('d-none');
             }
 
-        });
-    }
+        }
+    });
 
-    
-    
-});
+
+
+}
+
+function checkValidateField(fieldVal, field, msg, min, max){
+
+    if(fieldVal != ""){
+        if( fieldVal.length < min ){
+            $('#'+field).addClass('is-invalid')
+            $('#'+field+'Err').html('Please enter atleast '+min+' character.')
+            if(!isValidate) $('#'+field).focus()
+            isValidate = true;
+        }else if( !isASCII(fieldVal) ){
+            $('#'+field).addClass('is-invalid')
+            $('#'+field+'Err').html('Please enter a valid '+msg+'.')
+            if(!isValidate) $('#'+field).focus()
+            isValidate = true;
+        }
+    }
+}
+
+
+function validateField(fieldVal, field, msg, min, max){
+
+    if(fieldVal == ""){
+        $('#'+field).addClass('is-invalid')
+        if(!isValidate) $('#'+field).focus()
+        $('#'+field+'Err').html('Please enter a '+msg+'.')
+        isValidate = true;
+    }else if( fieldVal.length < min ){
+        $('#'+field).addClass('is-invalid')
+        $('#'+field+'Err').html('Please enter atleast '+min+' character.')
+        if(!isValidate) $('#'+field).focus()
+        isValidate = true;
+    }else if( !isASCII(fieldVal) ){
+        $('#'+field).addClass('is-invalid')
+        $('#'+field+'Err').html('Please enter a valid '+msg+'.')
+        if(!isValidate) $('#'+field).focus()
+        isValidate = true;
+    }
+}
+
 
 function getGTINProduct(){
+    
 
     $('#example').DataTable().destroy();
     $('#example').DataTable({
@@ -774,52 +1163,65 @@ function getGTINProduct(){
                 },
                 "columns" : [
                     {"data" : "gtin"},
-                    {"data" : "BrandOwnerName"},
-                    {"data" : "DataProviderName"},
-                    {"data" : "ManufacturerName"},
-                    {"data" : "ContactTypeCode"},
-                    {"data" : "Contact"},
-                    {"data" : "ContactAddress"},
-                    {"data" : "ContactMethodCode"},
-                    {"data" : "ContactDetails"},
-
                     {"data" : "BrandName"},
+                    {"data" : "BrandOwnerName"},
                     {"data" : "SubBrandName"},
+                    {"data" : "Contact"},
+                    {"data" : "ContactTypeCode"},
+                    {"data" : "ContactMethodCode"},
+                    {"data" : "ContactAddress"},
+                    {"data" : "ContactDetails"},
                     {"data" : "ShortProductName"},
                     {"data" : "ProductMarketingMessage"},
                     {"data" : "SearchKeyWordsforProduct"},
                     {"data" : "ProductTypeDescription"},
-
-                    {"data":null,"render":function(item){
-                            return item.Length+""+item.LengthUnit ;
-                        }
-                    },
-
-                    {"data":null,"render":function(item){
-                            return item.Height+""+item.HeightUnit ;
-                        }
-                    },
-
-                    {"data":null,"render":function(item){
-                            return item.Width+""+item.WidthUnit ;
-                        }
-                    },
-
-                    {"data":null,"render":function(item){
-                            return item.GrossWeight+""+item.GrossWeightUnit ;
-                        }
-                    },
-
+                    {"data" : "DataProviderName"},
+                    {"data" : "ManufacturerName"},
+                    {"data" : "GPCCode"},
                     {"data" : "MarketAvailabilityDate"},
+
+                    {"data":null,"render":function(item){
+                            if(item.Length == 0) return "";
+                            else return item.Length+""+item.LengthUnit ;
+                        }
+                    },
+
+                    {"data":null,"render":function(item){
+                            if(item.Height == 0) return "";
+                            else return item.Height+""+item.HeightUnit ;
+                        }
+                    },
+
+                    {"data":null,"render":function(item){
+                            if(item.Width == 0) return "";
+                            else return item.Width+""+item.WidthUnit ;
+                        }
+                    },
+
+                    {"data":null,"render":function(item){
+                            if(item.GrossWeight == 0) return "";
+                            else return item.GrossWeight+""+item.GrossWeightUnit ;
+                        }
+                    },
+
+                    
                     {"data" : "AllergenContainmentCode"},
                     {"data" : "AllergenTypeCode"},
                     {"data" : "AllergenStatement"},
                     {"data" : "IngredientStatement"},
+                    {"data" : "FeedTypeCertification"},
 
                     {"data":null,"render":function(item){
                             if(item.AllergenDeclarationsIndicator == true)
-                                return "yes";
-                            else return "no";
+                                return "<i class='bi bi-check-lg text-success'></i>";
+                            else return "<i class='bi bi-x-lg text-danger'></i>";
+                        }
+                    },
+
+                    {"data":null,"render":function(item){
+                            if(item.svrStatus == 1) return "<label>Allocated</label>";
+                            else if(item.svrStatus == 2) return '<label class="text-warning">Registered</label>' ;
+                            else if(item.svrStatus == 3) return '<label class="text-success">Activated</label>' ;
                         }
                     },
 
@@ -835,7 +1237,18 @@ function getGTINProduct(){
 
 function opengtinModal(id){
     $("#addNewGtinProduct").find('.is-invalid').removeClass("is-invalid");
+    $('#btnRegisterLoader').addClass('d-none');
+    $('#btnActivateLoader').addClass('d-none');
+    $('#btnSubmitLoader').addClass('d-none');
+
+    $('#gtinActivate').prop('disabled', false);
+    $('#gtinRegister').prop('disabled', false);
+    $('#btnSubmit').prop('disabled', false);
+
+
+
     if(id == ""){
+        $('#btnSubmit').removeClass('d-none');
         $('#BrandOwnerName').val('')
         $('#DataProviderName').val('')
         $('#ManufacturerName').val('')
@@ -865,6 +1278,15 @@ function opengtinModal(id){
         $('#IngredientStatement').val('')
         $('#AllergenDeclarationsIndicator').prop('checked', false);
         $('#Id').val('')
+        $('#svrStatus').val(0)
+        $('#GPCCode').val('')
+        $('#FeedTypeCertification').val('').change();
+        $('#showGtin').addClass('d-none');
+
+        $('#gtinRegister').addClass('d-none');
+        $('#gtinActivate').addClass('d-none');
+        $('#btnSubmitText').html('Save');
+        $('#gtinModalLabel').html('Add new GTIN Product');
         
 
     }else{
@@ -882,6 +1304,11 @@ function opengtinModal(id){
                // console.log(response)
                 if(response.status == 1){
                     var data = response.data[0];
+                    $('#btnSubmitText').html('Save changes');
+                    $('#gtinModalLabel').html('Edit GTIN Product');
+                    $('#showGtin').removeClass('d-none');
+                    $('#gtnSpan').html(data['gtin'])
+                    $('#gtinId').val(data['gtin'])
                     $('#BrandOwnerName').val(data['BrandOwnerName'])
                     $('#DataProviderName').val(data['DataProviderName'])
                     $('#ManufacturerName').val(data['ManufacturerName'])
@@ -896,13 +1323,20 @@ function opengtinModal(id){
                     $('#ProductMarketingMessage').val(data['ProductMarketingMessage'])
                     $('#SearchKeyWordsforProduct').val(data['SearchKeyWordsforProduct'])
                     $('#ProductTypeDescription').val(data['ProductTypeDescription'])
-                    $('#Length').val(data['Length'])
+
+                    if(data['Length'] == 0)$('#Length').val('')
+                    else $('#Length').val(data['Length'])
+
                     $('#LengthUnit').val(data['LengthUnit']).change();
-                    $('#Height').val(data['Height'])
+
+                    if(data['Height'] == 0)$('#Height').val('')
+                    else $('#Height').val(data['Height'])
                     $('#HeightUnit').val(data['HeightUnit']).change();
-                    $('#Width').val(data['Width'])
+                    if(data['Width'] == 0)$('#Width').val('')
+                    else $('#Width').val(data['Width'])
                     $('#WidthUnit').val(data['WidthUnit']).change();
-                    $('#GrossWeight').val(data['GrossWeight'])
+                    if(data['GrossWeight'] == 0)$('#GrossWeight').val('')
+                    else $('#GrossWeight').val(data['GrossWeight'])
                     $('#GrossWeightUnit').val(data['GrossWeightUnit']).change();
                     $('#MarketAvailabilityDate').val(data['MarketAvailabilityDate'])
                     $('#AllergenContainmentCode').val(data['AllergenContainmentCode'])
@@ -914,6 +1348,34 @@ function opengtinModal(id){
                     else
                         $('#AllergenDeclarationsIndicator').prop('checked', false);
                     $('#Id').val(id)
+
+                    $('#svrStatus').val(data['svrStatus'])
+                    $('#GPCCode').val(data['GPCCode'])
+                    $('#FeedTypeCertification').val(data['FeedTypeCertification']).change();
+
+                    if(data['svrStatus'] == 1){
+                        $('#btnSubmit').removeClass('d-none');
+                        $('#gtinRegister').removeClass('d-none');
+                        $('#gtinActivate').addClass('d-none');
+                        $('#gtnStatusSpan').html('Allocated')
+                    }else if(data['svrStatus'] == 2){
+                        $('#btnSubmit').removeClass('d-none');
+                        $('#gtinRegister').addClass('d-none');
+                        $('#gtinActivate').removeClass('d-none');
+                        $('#gtnStatusSpan').html('Registed')
+                    }else{
+                        $('#gtinRegister').addClass('d-none');
+                        $('#gtinActivate').addClass('d-none');
+                        $('#gtnStatusSpan').html('Activated')
+                        
+                        if( {{ request.session.userRole }} == 1){
+                            $('#btnSubmit').removeClass('d-none');
+                        }else{
+                            $('#btnSubmit').addClass('d-none');
+                        }
+                    }
+
+        
 
                 }
                 

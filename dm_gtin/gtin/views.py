@@ -14,23 +14,62 @@ from django.contrib import auth
 import datetime
 
 # Create your views here.
+class loginUser(View):
+    template_name = 'login.html'
+
+    def get(self, request, *args, **kwargs):
+        if 'login' in request.session:
+            return redirect('/dashboard/')
+        return render(request, self.template_name)
+    def post(self, request, *args, **kwargs):
+        req = request.POST
+        print('--------')
+        username = req.get('username')
+        password = req.get('password')
+        if username == "admin" and password == "passme2023":
+            request.session['userId'] = 10
+            request.session['login'] = True
+            request.session['userRole'] = 1
+            request.session['userName'] = username
+            return JsonResponse({'status':1,'message':'Login success'})
+        elif username == "user" and password == "passme2023":
+            request.session['userId'] = 11
+            request.session['login'] = True
+            request.session['userRole'] = 2
+            request.session['userName'] = username
+            return JsonResponse({'status':1,'message':'Login success'})
+        else:
+            return JsonResponse({'status':0,'message':'Invalid username or password'})
+        
+class logout(View):
+    def get(self, request, *args, **kwargs):
+        for key in list(request.session.keys()):
+            del request.session[key]
+        return redirect('/')
+        
+    
 class generateGtin(View):
     template_name = 'generate-gtin.html'
 
     def get(self, request, *args, **kwargs):
-        request.session['userId'] = 10
+        if 'login' not in request.session:
+            return redirect('/')
         return render(request, self.template_name)
 
 class GTINList(View):
     template_name = 'gtin-list.html'
 
     def get(self, request, *args, **kwargs):
+        if 'login' not in request.session:
+            return redirect('/')
         return render(request, self.template_name)
 
 class GTINProductEntry(View):
     template_name = 'gtin-product-entry.html'
 
     def get(self, request, *args, **kwargs):
+        if 'login' not in request.session:
+            return redirect('/')
         return render(request, self.template_name)
     def post(self, request, *args, **kwargs):
         data=[]
@@ -68,6 +107,9 @@ class GTINProductEntry(View):
                 'IngredientStatement' : Products.IngredientStatement,
                 'AllergenDeclarationsIndicator':Products.AllergenDeclarationsIndicator,
                 'id':Products.id,
+                'GPCCode' :Products.GPCCode,
+                'FeedTypeCertification' :Products.FeedTypeCertification,
+                'svrStatus' :Products.svrStatus,
             }) 
         return JsonResponse({'data':data})
 
@@ -106,22 +148,37 @@ class addGTINProductEntry(View):
         AllergenStatement = req.get('AllergenStatement')
         IngredientStatement = req.get('IngredientStatement')
         AllergenDeclarationsIndicator = req.get('AllergenDeclarationsIndicator')
+        GPCCode = req.get('GPCCode')
+        FeedTypeCertification = req.get('FeedTypeCertification')
         Id = req.get('Id')
-        # print(AllergenDeclarationsIndicator)
-        if AllergenDeclarationsIndicator == 'true':
-            AllergenDeclarationsIndicator = True
-        else:
+        svrStatus = req.get('svrStatus')
+        
+        print(MarketAvailabilityDate)
+        if MarketAvailabilityDate == "":
+            MarketAvailabilityDate = None
+        if Length == "":
+            Length = 0
+        if Height == "":
+            Height = 0
+        if Width == "":
+            Width = 0
+        if GrossWeight == "":
+            GrossWeight = 0
+        print(AllergenDeclarationsIndicator)
+        print("AllergenDeclarationsIndicator")
+        if AllergenDeclarationsIndicator == 'false':
             AllergenDeclarationsIndicator = False
-
-        if Id == "":
-            print('add')
-            Product.objects.create(gtin=gtin,BrandOwnerName=BrandOwnerName,DataProviderName=DataProviderName,ManufacturerName=ManufacturerName,ContactTypeCode=ContactTypeCode,Contact=Contact,ContactAddress=ContactAddress,ContactMethodCode=ContactMethodCode,ContactDetails=ContactDetails,BrandName=BrandName,SubBrandName=SubBrandName,ShortProductName=ShortProductName,ProductMarketingMessage=ProductMarketingMessage,SearchKeyWordsforProduct=SearchKeyWordsforProduct,ProductTypeDescription=ProductTypeDescription,Length=Length,LengthUnit=LengthUnit,Height=Height,HeightUnit=HeightUnit,Width=Width,WidthUnit=WidthUnit,GrossWeight=GrossWeight,GrossWeightUnit=GrossWeightUnit,MarketAvailabilityDate=MarketAvailabilityDate,AllergenContainmentCode=AllergenContainmentCode,AllergenTypeCode=AllergenTypeCode,AllergenStatement=AllergenStatement,IngredientStatement=IngredientStatement,AllergenDeclarationsIndicator=AllergenDeclarationsIndicator)
-            return JsonResponse({'status':1,'message':'Successfully add new product.'})
         else:
-            print('update')
-            Product.objects.filter(id=Id).update(BrandOwnerName=BrandOwnerName,DataProviderName=DataProviderName,ManufacturerName=ManufacturerName,ContactTypeCode=ContactTypeCode,Contact=Contact,ContactAddress=ContactAddress,ContactMethodCode=ContactMethodCode,ContactDetails=ContactDetails,BrandName=BrandName,SubBrandName=SubBrandName,ShortProductName=ShortProductName,ProductMarketingMessage=ProductMarketingMessage,SearchKeyWordsforProduct=SearchKeyWordsforProduct,ProductTypeDescription=ProductTypeDescription,Length=Length,LengthUnit=LengthUnit,Height=Height,HeightUnit=HeightUnit,Width=Width,WidthUnit=WidthUnit,GrossWeight=GrossWeight,GrossWeightUnit=GrossWeightUnit,MarketAvailabilityDate=MarketAvailabilityDate,AllergenContainmentCode=AllergenContainmentCode,AllergenTypeCode=AllergenTypeCode,AllergenStatement=AllergenStatement,IngredientStatement=IngredientStatement,AllergenDeclarationsIndicator=AllergenDeclarationsIndicator)
+            AllergenDeclarationsIndicator = True
+        
+        
+        if Id == "":
+            res = Product.objects.create(gtin=gtin,BrandOwnerName=BrandOwnerName,DataProviderName=DataProviderName,ManufacturerName=ManufacturerName,ContactTypeCode=ContactTypeCode,Contact=Contact,ContactAddress=ContactAddress,ContactMethodCode=ContactMethodCode,ContactDetails=ContactDetails,BrandName=BrandName,SubBrandName=SubBrandName,ShortProductName=ShortProductName,ProductMarketingMessage=ProductMarketingMessage,SearchKeyWordsforProduct=SearchKeyWordsforProduct,ProductTypeDescription=ProductTypeDescription,Length=Length,LengthUnit=LengthUnit,Height=Height,HeightUnit=HeightUnit,Width=Width,WidthUnit=WidthUnit,GrossWeight=GrossWeight,GrossWeightUnit=GrossWeightUnit,MarketAvailabilityDate=MarketAvailabilityDate,AllergenContainmentCode=AllergenContainmentCode,AllergenTypeCode=AllergenTypeCode,AllergenStatement=AllergenStatement,IngredientStatement=IngredientStatement,AllergenDeclarationsIndicator=AllergenDeclarationsIndicator,svrStatus=1,GPCCode=GPCCode,FeedTypeCertification=FeedTypeCertification)
+            return JsonResponse({'status':1,'message':'Successfully add new product.','id':res.id})
+        else:
+            Product.objects.filter(id=Id).update(BrandOwnerName=BrandOwnerName,DataProviderName=DataProviderName,ManufacturerName=ManufacturerName,ContactTypeCode=ContactTypeCode,Contact=Contact,ContactAddress=ContactAddress,ContactMethodCode=ContactMethodCode,ContactDetails=ContactDetails,BrandName=BrandName,SubBrandName=SubBrandName,ShortProductName=ShortProductName,ProductMarketingMessage=ProductMarketingMessage,SearchKeyWordsforProduct=SearchKeyWordsforProduct,ProductTypeDescription=ProductTypeDescription,Length=Length,LengthUnit=LengthUnit,Height=Height,HeightUnit=HeightUnit,Width=Width,WidthUnit=WidthUnit,GrossWeight=GrossWeight,GrossWeightUnit=GrossWeightUnit,MarketAvailabilityDate=MarketAvailabilityDate,AllergenContainmentCode=AllergenContainmentCode,AllergenTypeCode=AllergenTypeCode,AllergenStatement=AllergenStatement,IngredientStatement=IngredientStatement,AllergenDeclarationsIndicator=AllergenDeclarationsIndicator,svrStatus=svrStatus,GPCCode=GPCCode,FeedTypeCertification=FeedTypeCertification)
             return JsonResponse({'status':1,'message':'Successfully update product.'})
-
+       
 class editGTINProductEntry(View):
     template_name = 'gtin-product-entry.html'
 
@@ -131,6 +188,7 @@ class editGTINProductEntry(View):
         id = req.get('id')
         res = Product.objects.filter(id=id)
         data.append({
+            'gtin': res[0].gtin,
             'BrandOwnerName' : res[0].BrandOwnerName,
             'DataProviderName' : res[0].DataProviderName,
             'ManufacturerName' : res[0].ManufacturerName,
@@ -159,6 +217,9 @@ class editGTINProductEntry(View):
             'AllergenStatement' : res[0].AllergenStatement,
             'IngredientStatement' : res[0].IngredientStatement,
             'AllergenDeclarationsIndicator':res[0].AllergenDeclarationsIndicator,
+            'svrStatus':res[0].svrStatus,
+            'GPCCode':res[0].GPCCode,
+            'FeedTypeCertification':res[0].FeedTypeCertification,
         })
 
         return JsonResponse({'status':1,'data':data})

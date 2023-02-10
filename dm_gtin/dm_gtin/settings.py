@@ -25,7 +25,7 @@ SECRET_KEY = '3fa*=dvko#(xi=$ka#z0mgf33+9r!rs3*v&&m@#d!0im%1k7rr'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['54.175.136.20']
 
 
 # Application definition
