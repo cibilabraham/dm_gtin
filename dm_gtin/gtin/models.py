@@ -52,3 +52,15 @@ class Product(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+class GS1Rules(models.Model):
+    FieldName= models.CharField(max_length=100)
+    Rules= models.TextField(null = True)
+    ValidationMessage= models.CharField(max_length=225)
+    Enabled= models.BooleanField(default=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    
+    

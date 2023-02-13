@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 from gtin.models import *
 from django.contrib import auth
 import datetime
+import rule_engine
 
 # Create your views here.
 class loginUser(View):
@@ -24,6 +25,7 @@ class loginUser(View):
     def post(self, request, *args, **kwargs):
         req = request.POST
         print('--------')
+       
         username = req.get('username')
         password = req.get('password')
         if username == "admin" and password == "passme2023":
@@ -46,6 +48,41 @@ class logout(View):
         for key in list(request.session.keys()):
             del request.session[key]
         return redirect('/')
+    
+class Enable(View):
+    def post(self, request, *args, **kwargs):
+        req = request.POST
+        # print(req)
+        Id = req.get('id')
+        val = req.get('val')
+        if int(val) == 1:
+            GS1Rules.objects.filter(id=Id).update(Enabled=False)
+            return JsonResponse({'status':1,'message':'Successfully disabled'})
+        else:
+            GS1Rules.objects.filter(id=Id).update(Enabled=True)
+            return JsonResponse({'status':1,'message':'Successfully enabled'})
+        
+            
+        
+    
+class ValidationRules(View):
+    template_name = 'validation-rules.html'
+    def get(self, request, *args, **kwargs):
+        if 'login' not in request.session:
+            return redirect('/')
+        return render(request, self.template_name)
+    def post(self, request, *args, **kwargs):
+        data=[]
+        Rules_data =GS1Rules.objects.filter()
+        for Rules in Rules_data:
+            data.append({ 
+                'FieldName' :  Rules.FieldName,
+                'Rules' : Rules.Rules,
+                'ValidationMessage' : Rules.ValidationMessage,
+                'Enabled' : Rules.Enabled,
+                'id':Rules.id,
+            }) 
+        return JsonResponse({'data':data})
         
     
 class generateGtin(View):
@@ -112,6 +149,33 @@ class GTINProductEntry(View):
                 'svrStatus' :Products.svrStatus,
             }) 
         return JsonResponse({'data':data})
+    
+    
+class validateGTINProductEntry(View):
+
+    def post(self, request, *args, **kwargs):
+        req = request.POST
+        errList = []
+        isErr = False
+        rules = GS1Rules.objects.filter()
+        for row in rules:
+            if row.Enabled == True:
+                rule = rule_engine.Rule(row.Rules)
+                res = rule.matches(req)
+                if res == True:
+                    print(row.Rules)
+                    isErr = True
+                    errList.append({
+                        'FieldName': row.FieldName,
+                        'ValidationMessage': row.ValidationMessage,
+                    })
+        if isErr :
+            return JsonResponse({'status':0,'message':'Validation error','err':errList})
+        return JsonResponse({'status':1,'message':'Validation Complete.'})
+    
+    
+    
+    
 
 class addGTINProductEntry(View):
     template_name = 'gtin-product-entry.html'
@@ -178,6 +242,7 @@ class addGTINProductEntry(View):
         else:
             Product.objects.filter(id=Id).update(BrandOwnerName=BrandOwnerName,DataProviderName=DataProviderName,ManufacturerName=ManufacturerName,ContactTypeCode=ContactTypeCode,Contact=Contact,ContactAddress=ContactAddress,ContactMethodCode=ContactMethodCode,ContactDetails=ContactDetails,BrandName=BrandName,SubBrandName=SubBrandName,ShortProductName=ShortProductName,ProductMarketingMessage=ProductMarketingMessage,SearchKeyWordsforProduct=SearchKeyWordsforProduct,ProductTypeDescription=ProductTypeDescription,Length=Length,LengthUnit=LengthUnit,Height=Height,HeightUnit=HeightUnit,Width=Width,WidthUnit=WidthUnit,GrossWeight=GrossWeight,GrossWeightUnit=GrossWeightUnit,MarketAvailabilityDate=MarketAvailabilityDate,AllergenContainmentCode=AllergenContainmentCode,AllergenTypeCode=AllergenTypeCode,AllergenStatement=AllergenStatement,IngredientStatement=IngredientStatement,AllergenDeclarationsIndicator=AllergenDeclarationsIndicator,svrStatus=svrStatus,GPCCode=GPCCode,FeedTypeCertification=FeedTypeCertification)
             return JsonResponse({'status':1,'message':'Successfully update product.'})
+       
        
 class editGTINProductEntry(View):
     template_name = 'gtin-product-entry.html'
