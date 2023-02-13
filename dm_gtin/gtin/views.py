@@ -25,7 +25,6 @@ class loginUser(View):
     def post(self, request, *args, **kwargs):
         req = request.POST
         print('--------')
-       
         username = req.get('username')
         password = req.get('password')
         if username == "admin" and password == "passme2023":

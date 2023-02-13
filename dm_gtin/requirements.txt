@@ -1,3 +1,4 @@
 Django==3.0.4
 xlrd==1.2.0
 Pillow==9.4.0
+rule-engine==3.5.0
