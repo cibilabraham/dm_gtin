@@ -467,24 +467,23 @@ $( "#addNewGtinProduct" ).submit(function(e) {
     e.preventDefault();
    
     var BrandName= $('#BrandName').val().replace(/^\s+|\s+$/gm,'');
-    var BrandOwnerName= $('#BrandOwnerName').val()
-    var SubBrandName= $('#SubBrandName').val()
+    var BrandOwnerName= $('#BrandOwnerName').val().replace(/^\s+|\s+$/gm,'');
+    var SubBrandName= $('#SubBrandName').val().replace(/^\s+|\s+$/gm,'');
 
-
-    var Contact= $('#Contact').val()
-    var ContactTypeCode= $('#ContactTypeCode').val()
-    var ContactMethodCode= $('#ContactMethodCode').val()
-    var ContactAddress= $('#ContactAddress').val()
-    var ContactDetails= $('#ContactDetails').val()
+    var Contact= $('#Contact').val().replace(/^\s+|\s+$/gm,'');
+    var ContactTypeCode= $('#ContactTypeCode').val().replace(/^\s+|\s+$/gm,'');
+    var ContactMethodCode= $('#ContactMethodCode').val().replace(/^\s+|\s+$/gm,'');
+    var ContactAddress= $('#ContactAddress').val().replace(/^\s+|\s+$/gm,'');
+    var ContactDetails= $('#ContactDetails').val().replace(/^\s+|\s+$/gm,'');
 
 
     var ShortProductName= $('#ShortProductName').val().replace(/^\s+|\s+$/gm,'');
-    var ProductMarketingMessage= $('#ProductMarketingMessage').val()
-    var SearchKeyWordsforProduct= $('#SearchKeyWordsforProduct').val()
+    var ProductMarketingMessage= $('#ProductMarketingMessage').val().replace(/^\s+|\s+$/gm,'');
+    var SearchKeyWordsforProduct= $('#SearchKeyWordsforProduct').val().replace(/^\s+|\s+$/gm,'');
     var ProductTypeDescription= $('#ProductTypeDescription').val().replace(/^\s+|\s+$/gm,'');
-    var DataProviderName= $('#DataProviderName').val()
-    var ManufacturerName= $('#ManufacturerName').val()
-    var GPCCode= $('#GPCCode').val()
+    var DataProviderName= $('#DataProviderName').val().replace(/^\s+|\s+$/gm,'');
+    var ManufacturerName= $('#ManufacturerName').val().replace(/^\s+|\s+$/gm,'');
+    var GPCCode= $('#GPCCode').val().replace(/^\s+|\s+$/gm,'');
     var MarketAvailabilityDate= $('#MarketAvailabilityDate').val()
 
 
@@ -496,11 +495,10 @@ $( "#addNewGtinProduct" ).submit(function(e) {
     var WidthUnit= $('#WidthUnit').val()
     var GrossWeight= $('#GrossWeight').val()
     var GrossWeightUnit= $('#GrossWeightUnit').val()
-    
-    var AllergenContainmentCode= $('#AllergenContainmentCode').val()
-    var AllergenTypeCode= $('#AllergenTypeCode').val()
-    var AllergenStatement= $('#AllergenStatement').val()
-    var IngredientStatement= $('#IngredientStatement').val()
+    var AllergenContainmentCode= $('#AllergenContainmentCode').val().replace(/^\s+|\s+$/gm,'');
+    var AllergenTypeCode= $('#AllergenTypeCode').val().replace(/^\s+|\s+$/gm,'');
+    var AllergenStatement= $('#AllergenStatement').val().replace(/^\s+|\s+$/gm,'');
+    var IngredientStatement= $('#IngredientStatement').val().replace(/^\s+|\s+$/gm,'');
     var FeedTypeCertification = $('#FeedTypeCertification').val()
     var AllergenDeclarationsIndicator= $('#AllergenDeclarationsIndicator')[0].checked
 
