@@ -25,6 +25,16 @@ class loginUser(View):
     def post(self, request, *args, **kwargs):
         req = request.POST
         print('--------')
+        
+        # GS1Rules.objects.create(FieldName='AllergenTypeCode',Rules='AllergenDeclarationsIndicator =="true" and AllergenTypeCode =="" ',ValidationMessage="If the allergen declarations indicator is true then allergen type code is mandarory.")
+        
+        # GS1Rules.objects.create(FieldName='AllergenContainmentCode',Rules='AllergenTypeCode !="" and AllergenContainmentCode =="" ',ValidationMessage="If the allergen type code is specified then allergen containment code is mandarory.")
+        
+        # GS1Rules.objects.create(FieldName='IngredientStatement',Rules='FeedTypeCertification !="" and IngredientStatement =="" ',ValidationMessage="If the feed type certification is specified then ingredient statement is mandarory.")
+        
+        # GS1Rules.objects.create(FieldName='IngredientStatement',Rules='(FeedTypeCertification == "Halal" or FeedTypeCertification == "Kosher") and (IngredientStatement =~ "^ham." or IngredientStatement =~ ".*ham." or IngredientStatement =~ ".*ham*." or IngredientStatement =~ "^pork." or IngredientStatement =~ ".*pork." or IngredientStatement =~ ".*pork*.") ',ValidationMessage="You cant add ham or pork with “Halal” and “Kosher” ")
+        
+        
         username = req.get('username')
         password = req.get('password')
         if username == "admin" and password == "passme2023":
