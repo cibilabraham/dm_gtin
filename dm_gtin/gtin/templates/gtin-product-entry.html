@@ -113,15 +113,15 @@
                     </div>
 
                     <div class="col-md-3">
-                        <label  class="form-label">Brand Name *(min:5, max:15 -char)</label>
-                        <input type="text" class="form-control" id="BrandName" value="" placeholder="Enter Brand Name" onkeyup="removeErr('BrandName') " maxlength="15" minlength="5">
-                        <div class="invalid-feedback" id="BrandNameErr"></div>
-                    </div>
-
-                    <div class="col-md-3">
                         <label  class="form-label">Brand Owner Name *(min:5, max:15 -char)</label>
                         <input type="text" class="form-control" id="BrandOwnerName" value="" placeholder="Enter Brand Owner Name" maxlength="15" minlength="5" onkeyup="removeErr('BrandOwnerName') ">
                         <div class="invalid-feedback" id="BrandOwnerNameErr"></div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label  class="form-label">Brand Name *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" id="BrandName" value="" placeholder="Enter Brand Name" onkeyup="removeErr('BrandName') " maxlength="15" minlength="5">
+                        <div class="invalid-feedback" id="BrandNameErr"></div>
                     </div>
 
                     <div class="col-md-3">
@@ -355,10 +355,17 @@
                     </div>
 
 
-                    <div class="col-md-3 mt-2">
-                        <label  class="form-label">Allergen Containment Code *(min:5, max:15 -char)</label>
-                        <input type="text" class="form-control" maxlength="15" minlength="5" id="AllergenContainmentCode" value="" placeholder="Enter Allergen Containment Code" onkeyup="removeErr('AllergenContainmentCode') ">
-                        <div class="invalid-feedback" id="AllergenContainmentCodeErr"></div>
+                    <div class="col-md-3">
+                        <label  class="form-label">&nbsp;
+                        </label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="AllergenDeclarationsIndicator" >
+                            <label class="form-check-label" for="invalidCheck3">
+                                Allergen Declarations Indicator
+                            </label>
+                        
+                        </div>
+
                     </div>
 
                     <div class="col-md-3 mt-2">
@@ -367,18 +374,24 @@
                         <div class="invalid-feedback" id="AllergenTypeCodeErr"></div>
                     </div>
 
+
+
+
+                    <div class="col-md-3 mt-2">
+                        <label  class="form-label">Allergen Containment Code *(min:5, max:15 -char)</label>
+                        <input type="text" class="form-control" maxlength="15" minlength="5" id="AllergenContainmentCode" value="" placeholder="Enter Allergen Containment Code" onkeyup="removeErr('AllergenContainmentCode') ">
+                        <div class="invalid-feedback" id="AllergenContainmentCodeErr"></div>
+                    </div>
+
+                  
+
                     <div class="col-md-3 mt-2">
                         <label  class="form-label">Allergen Statement *(min:5, max:15 -char)</label>
                         <input type="text" class="form-control" maxlength="15" minlength="5" id="AllergenStatement" value="" placeholder="Enter Allergen Statement" onkeyup="removeErr('AllergenStatement') ">
                         <div class="invalid-feedback" id="AllergenStatementErr"></div>
                     </div>
 
-                    <div class="col-md-3 mt-2">
-                        <label  class="form-label">Ingredient Statement *(min:5, max:100 -char)
-                        </label>
-                        <textarea class="form-control" maxlength="100" minlength="15" id="IngredientStatement" value="" placeholder="Enter Ingredient Statement" onkeyup="removeErr('IngredientStatement') "></textarea>
-                        <div class="invalid-feedback" id="IngredientStatementErr"></div>
-                    </div>
+                  
 
                     <div class="col-md-3 ">
                         <label  class="form-label">Feed Type Certification
@@ -394,18 +407,14 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3">
-                        <label  class="form-label">&nbsp;
+                    <div class="col-md-3 mt-2">
+                        <label  class="form-label">Ingredient Statement *(min:5, max:100 -char)
                         </label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="AllergenDeclarationsIndicator" >
-                            <label class="form-check-label" for="invalidCheck3">
-                                Allergen Declarations Indicator
-                            </label>
-                        
-                        </div>
-
+                        <textarea class="form-control" maxlength="100" minlength="15" id="IngredientStatement" value="" placeholder="Enter Ingredient Statement" onkeyup="removeErr('IngredientStatement') "></textarea>
+                        <div class="invalid-feedback" id="IngredientStatementErr"></div>
                     </div>
+
+                   
 
                    
 
@@ -522,7 +531,7 @@ $( "#addNewGtinProduct" ).submit(function(e) {
         checkValidateField(DataProviderName, 'DataProviderName', "data provider name", 5, 15)
         checkValidateField(ManufacturerName, 'ManufacturerName', "manu facturer name", 5, 15)
         checkValidateField(AllergenStatement, 'AllergenStatement', "allergen statement", 5, 15)
-        checkValidateField(IngredientStatement, 'IngredientStatement', "ingredient statement", 5, 15)
+        
 
         
     }else{
@@ -570,7 +579,7 @@ $( "#addNewGtinProduct" ).submit(function(e) {
     
         
         validateField(AllergenStatement, 'AllergenStatement', "allergen statement", 5, 15)
-        validateField(IngredientStatement, 'IngredientStatement', "ingredient statement", 5, 15)
+        
     
         if(FeedTypeCertification == ""){
             $('#FeedTypeCertification').addClass('is-invalid')
@@ -608,6 +617,7 @@ $( "#addNewGtinProduct" ).submit(function(e) {
 
     checkValidateField(AllergenContainmentCode, 'AllergenContainmentCode', "allergen containment code", 5, 15)
     checkValidateField(AllergenTypeCode, 'AllergenTypeCode', "allergen type code", 5, 15)
+    checkValidateField(IngredientStatement, 'IngredientStatement', "ingredient statement", 5, 15)
    
     if(isValidate) return false;
 
@@ -871,24 +881,10 @@ $( "#addNewGtinProduct" ).submit(function(e) {
                     var field = errList[i]['FieldName'];
                     var ValidationMessage = errList[i]['ValidationMessage'];
 
-                    if(field != 'IngredientStatement'){
-                        $('#'+field).addClass('is-invalid')
-                        $('#'+field+'Err').html(ValidationMessage)
-                        if(!isValidate) $('#'+field).focus()
-                        isValidate = true;
-                    }else{
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'error',
-                            title: 'Pork or ham found',
-                            text: ValidationMessage,
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-
-                    }
-
-                   
+                    $('#'+field).addClass('is-invalid')
+                    $('#'+field+'Err').html(ValidationMessage)
+                    if(!isValidate) $('#'+field).focus()
+                    isValidate = true;
 
                 }
 
@@ -998,7 +994,7 @@ function registerGtin(status){
     }
 
     validateField(AllergenStatement, 'AllergenStatement', "allergen statement", 5, 15)
-    validateField(IngredientStatement, 'IngredientStatement', "ingredient statement", 5, 15)
+   
 
     if(FeedTypeCertification == ""){
         $('#FeedTypeCertification').addClass('is-invalid')
@@ -1008,6 +1004,7 @@ function registerGtin(status){
 
     checkValidateField(AllergenContainmentCode, 'AllergenContainmentCode', "allergen containment code", 5, 15)
     checkValidateField(AllergenTypeCode, 'AllergenTypeCode', "allergen type code", 5, 15)
+    checkValidateField(IngredientStatement, 'IngredientStatement', "ingredient statement", 5, 15)
 
     /*var str2 = "pork";
     console.log(FeedTypeCertification);
@@ -1239,22 +1236,11 @@ function registerGtin(status){
                     var field = errList[i]['FieldName'];
                     var ValidationMessage = errList[i]['ValidationMessage'];
 
-                    if(field != 'IngredientStatement'){
                         $('#'+field).addClass('is-invalid')
                         $('#'+field+'Err').html(ValidationMessage)
                         if(!isValidate) $('#'+field).focus()
                         isValidate = true;
-                    }else{
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'error',
-                            title: 'Pork or ham found',
-                            text: ValidationMessage,
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-
-                    }
+                   
 
                 }
 
